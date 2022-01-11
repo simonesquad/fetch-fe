@@ -254,7 +254,7 @@ export default function Form() {
                                         </select>
                 {formErrors.occupation && <p className="error">{formErrors.occupation}</p>}
         
-                    <button type="submit">Submit All User Info</button>
+                    <button type="submit">Submit Here</button>
                 </div>
             </div>
         </div>
