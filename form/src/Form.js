@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { toggleMain,  setErrors } from '../store/actions/master';
+import { useNavigate } from 'react-router-dom';
+import { toggleMain,  setErrors } from './store/actions/master';
 import styled from 'styled-components';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -34,9 +34,7 @@ const PrettyForm = styled.div`
   }
 `
 
-
 const initialFormValues = {
-   
     name: 'Cinderella',
     email: 'mermaid@hotmail.com',
     password: '********',
@@ -45,7 +43,6 @@ const initialFormValues = {
 }
 
 const initialFormErrors = {
-  
     name: '',
     email: '',
     password: '',
@@ -65,8 +62,7 @@ export default function Form() {
     const [disabled, setDisabled] = useState(initialDisabled)
     // const signUp = useSelector(state => state.registerReducer.isSignUp);
     const dispatch = useDispatch();
-    const { push } = useHistory();
-    const history = useHistory();
+    let navigate = useNavigate();
 
     React.useEffect(() => {
         let unmounted = false;
@@ -168,7 +164,7 @@ export default function Form() {
         .post('https://frontend-take-home.fetchrewards.com/form', formValues)
         .then(res => {
             dispatch(toggleMain())
-            history.push('/success')
+            navigate('/')
         })
         .catch(err => {
             dispatch(setErrors(err))
