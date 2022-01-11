@@ -37,11 +37,11 @@ const PrettyForm = styled.div`
 
 const initialFormValues = {
    
-    name: '',
-    email: '',
-    password: '',
-    occupation: '',
-    state: ''
+    name: 'Cinderella',
+    email: 'mermaid@hotmail.com',
+    password: '********',
+    occupation: 'Head of Shrubbery',
+    state: 'Wyoming'
 }
 
 const initialFormErrors = {
@@ -58,11 +58,61 @@ const initialDisabled = true
 export default function Form() {
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
+    const [loading, setLoading] = React.useState(true);
+    const [occs, setOccs] = React.useState([ { label: "Loading...", value: "" }]);
+    const [states, setStates] = React.useState([ { label: "Loading...", value: "" }]);
+    const [value, setValue] = React.useState();
     const [disabled, setDisabled] = useState(initialDisabled)
     // const signUp = useSelector(state => state.registerReducer.isSignUp);
     const dispatch = useDispatch();
     const { push } = useHistory();
     const history = useHistory();
+
+    React.useEffect(() => {
+        let unmounted = false;
+        async function getOccupations() {
+            const response = await fetch(
+                "https://frontend-take-home.fetchrewards.com/form"
+            );
+            const body = await response.json();
+            if (!unmounted) {
+                setOccs(
+                    body.results.map(({ occupations }) => ({
+                        label: occupations,
+                        value: occupations
+                    }))
+                );
+                setLoading(false);
+            }
+        }
+        getOccupations();
+        return() => {
+            unmounted = true;
+        };
+    }, []);
+
+    React.useEffect(() => {
+        let unmounted = false;
+        async function getStates() {
+            const response = await fetch(
+                "https://frontend-take-home.fetchrewards.com/form"
+            );
+            const body = await response.json();
+            if (!unmounted) {
+                setStates(
+                    body.results.map(({ name }) => ({
+                        label: name,
+                        value: name
+                    }))
+                );
+                setLoading(false);
+            }
+        }
+        getStates();
+        return() => {
+            unmounted = true;
+        };
+    }, []);
 
     const formSchema = yup.object().shape({
       name: yup
@@ -180,26 +230,36 @@ export default function Form() {
                                 />
                 {formErrors.password && <p className="error">{formErrors.password}</p>}
 
-                    <label htmlFor="role">Role: </label>
+                    <label htmlFor="occupation">Occupation: </label>
                                     <select
+                                    disabled={loading}
                                     type="dropdown"
-                                    name="role"
+                                    name="occupation"
+                                    value={value}
                                     onChange={onInputChange}
                                     >
-                                    <option value="">Pick a role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="student">Student</option>
-                                    <option value="volunteer">Volunteer</option>
+                                    <option value="">Pick an Occupation</option>
                                     </select>
-                {formErrors.role && <p className="error">{formErrors.role}</p>}
+                {formErrors.occupation && <p className="error">{formErrors.occupation}</p>}
+
+                    <label htmlFor="state">State: </label>
+                                        <select
+                                        disabled={loading}
+                                        type="dropdown"
+                                        name="state"
+                                        value={value}
+                                        onChange={onInputChange}
+                                        >
+                                        <option value="">Pick a State</option>
+                                        </select>
+                {formErrors.occupation && <p className="error">{formErrors.occupation}</p>}
         
-                <button type="submit">Submit</button>
+                    <button type="submit">Submit All User Info</button>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
-        </form>
-            
-     </PrettyForm>    
+    </form>
+</PrettyForm>    
 
     )
 }  
