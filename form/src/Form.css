@@ -1,0 +1,20 @@
+.main {
+    width: 50vw;
+}
+form {
+    margin-left: 4vw;
+    display: flex;
+    flex-direction: column;
+}
+h2 {
+      margin: 0 auto 2% auto;
+    }
+label {
+    display: flex;
+}
+button {
+      border-radius: 10%;
+    }
+.error {
+      color: red;
+    }

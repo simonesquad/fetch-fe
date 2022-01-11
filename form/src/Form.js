@@ -2,37 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toggleMain,  setErrors } from './store/actions/master';
-import styled from 'styled-components';
+import './Form.css';
 import axios from 'axios';
 import * as yup from 'yup';
-
-const PrettyForm = styled.div`
-  text-align: center;
-  color: white;
-  h2 {
-    margin: 0 auto 2% auto;
-  }
-  .input-container {
-    margin: 10% auto;
-  }
-  form {
-    margin: 7% 10%;
-  }
-  button {
-    background-color: var(--purple);
-    font-size: 1rem;
-    padding: 2% 4%;
-    border-radius: 3px;
-    color: white;
-    font-weight: bolder;
-    &:hover {
-      color: var(--aqua);
-    }
-  }
-  .error {
-    color: red;
-  }
-`
 
 const initialFormValues = {
     name: 'Cinderella',
@@ -189,7 +161,7 @@ export default function Form() {
     }, [formValues])
     
     return (
-    <PrettyForm>
+    <div className="main">
         <form onSubmit={onSubmit}> 
             <div className='form container' >
                 <div className='form-group submit'>
@@ -255,7 +227,7 @@ export default function Form() {
             </div>
         </div>
     </form>
-</PrettyForm>    
+</div>    
 
     )
 }  
