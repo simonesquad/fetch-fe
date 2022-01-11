@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import * as yup from 'yup';
 
-const RegisterPageContainer = styled.div`
+const PrettyForm = styled.div`
   text-align: center;
   color: white;
   h2 {
@@ -106,17 +106,19 @@ export default function Form() {
 
     const submit = (formValues) => {
       
-    const newStudent = {
-        username: formValues.username.trim(),
+    const newUser = {
+        name: formValues.name.trim(),
+        email: formValues.email,
         password: formValues.password,
-        role: formValues.role
+        occupation: formValues.occupation,
+        state: formValues.state
         }
        
     axios 
-        .post('https://cloudskool.herokuapp.com/api/auth/register', formValues)
+        .post('https://frontend-take-home.fetchrewards.com/form', formValues)
         .then(res => {
             dispatch(toggleMain())
-            history.push('/login')
+            history.push('/success')
         })
         .catch(err => {
             dispatch(setErrors(err))
@@ -141,44 +143,54 @@ export default function Form() {
     }, [formValues])
     
     return (
-    <RegisterPageContainer>
+    <PrettyForm>
         <form onSubmit={onSubmit}> 
             <div className='form container' >
                 <div className='form-group submit'>
-                 <h2>Sign Up</h2>
+                 <h2>Register Here</h2>
                  <div className='register-form-container'>
 
-                    <label htmlFor="username">Username: </label>
+                    <label htmlFor="name">Name: </label>
                             <input 
                             type="text"
-                            name="username"
-                            placeholder="Username"
-                            value={formValues.username}
+                            name="name"
+                            placeholder="Name"
+                            value={formValues.name}
                             onChange={onInputChange}
                             />
-                 {formErrors.username && <p className="error">{formErrors.username}</p>}
+                 {formErrors.name && <p className="error">{formErrors.name}</p>}
 
-                 <label htmlFor="password">Password: </label>
-                            <input 
-                            type="text"
-                            name="password"
-                            placeholder="Password"
-                            value={formValues.password}
-                            onChange={onInputChange}
-                            />
+                    <label htmlFor="email">Email: </label>
+                                    <input 
+                                    type="text"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formValues.email}
+                                    onChange={onInputChange}
+                                    />
+                {formErrors.email && <p className="error">{formErrors.email}</p>}
+
+                    <label htmlFor="password">Password: </label>
+                                <input 
+                                type="text"
+                                name="password"
+                                placeholder="Password"
+                                value={formValues.password}
+                                onChange={onInputChange}
+                                />
                 {formErrors.password && <p className="error">{formErrors.password}</p>}
 
-        <label htmlFor="role">Role: </label>
-                        <select
-                        type="dropdown"
-                        name="role"
-                        onChange={onInputChange}
-                        >
-                        <option value="">Pick a role</option>
-                        <option value="admin">Admin</option>
-                        <option value="student">Student</option>
-                        <option value="volunteer">Volunteer</option>
-                        </select>
+                    <label htmlFor="role">Role: </label>
+                                    <select
+                                    type="dropdown"
+                                    name="role"
+                                    onChange={onInputChange}
+                                    >
+                                    <option value="">Pick a role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="student">Student</option>
+                                    <option value="volunteer">Volunteer</option>
+                                    </select>
                 {formErrors.role && <p className="error">{formErrors.role}</p>}
         
                 <button type="submit">Submit</button>
@@ -187,7 +199,7 @@ export default function Form() {
     </div>
         </form>
             
-     </RegisterPageContainer>    
+     </PrettyForm>    
 
     )
 }  
