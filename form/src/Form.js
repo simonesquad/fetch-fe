@@ -28,8 +28,8 @@ export default function Form() {
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     const [loading, setLoading] = React.useState(true);
-    const [occs, setOccs] = React.useState([ { label: "Loading...", value: "" }]);
-    const [states, setStates] = React.useState([ { label: "Loading...", value: "" }]);
+    const [occs, setOccs] = React.useState([ { label: "Loading...", value: "" } ]);
+    const [states, setStates] = React.useState([ { label: "Loading...", value: "" } ]);
     const [value, setValue] = React.useState();
     const [disabled, setDisabled] = useState(initialDisabled)
     // const signUp = useSelector(state => state.registerReducer.isSignUp);
@@ -221,8 +221,9 @@ export default function Form() {
                                         <option value="">Pick a State</option>
                                         </select>
                 {formErrors.occupation && <p className="error">{formErrors.occupation}</p>}
-        
-                    <button type="submit">Submit Here</button>
+                    <div className="last">
+                        <button type="submit">Submit Here</button>
+                    </div>
                 </div>
             </div>
         </div>
